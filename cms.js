@@ -87,3 +87,123 @@ function viewEmployees() {
         startUp();
     });
 }
+
+function addDepartments(){
+    inquirer
+        .prompt([
+            {
+                name: "department_id",
+                type: "input",
+                message: "Add new department id."
+            },
+            {
+                name: "name",
+                type: "input",
+                message: "Add new department name."
+            }
+        ])
+        .then(function(answer) {
+            connection.query(
+                "INSERT INTO department SET ?",
+                {
+                    department_id: answer.department_id,
+                    name: answer.name
+                },
+                function(err) {
+                    if (err) throw err;
+                    console.log("New Department has been added.");
+                    startUp();
+                }
+            )
+        });
+}
+
+function addRoles(){
+    inquirer
+        .prompt([
+            {
+                name: "role_id",
+                type: "input",
+                message: "Add new role id."
+            },
+            {
+                name: "title",
+                type: "input",
+                message: "Add new title for role."
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "Add new salary."
+            },
+            {
+                name: "department_id",
+                type: "input",
+                message: "Add department id that role belongs too."
+            },
+        ])
+        .then(function(answer) {
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                    role_id: answer.role_id,
+                    title: answer.title,
+                    salary: answer.salary,
+                    department_id: answer.department_id
+                },
+                function(err) {
+                    if (err) throw err;
+                    console.log("New Role has been added.");
+                    startUp();
+                }
+            )
+        });
+}
+
+function addEmployees() {
+    inquirer
+        .prompt([
+            {
+                name: "employee_id",
+                type: "input",
+                message: "Add new employee id."
+            },
+            {
+                name: "first_name",
+                type: "input",
+                message: "Add first name for employee."
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "Add last name for employee."
+            },
+            {
+                name: "role_id",
+                type: "input",
+                message: "Add role id for new employee."
+            },
+            {
+                name: "manager_id",
+                type: "input",
+                message: "Add manager id that will overseen the new employee."
+            },
+        ])
+        .then(function(answer) {
+            connection.query(
+                "INSERT INTO employee SET ?",
+                {
+                    employee_id: answer.employee_id,
+                    first_name: answer.first_name,
+                    last_name: answer.last_name,
+                    role_id: answer.role_id,
+                    manager_id: answer.manager_id
+                },
+                function(err) {
+                    if (err) throw err;
+                    console.log("New Employee has been added.");
+                    startUp();
+                }
+            )
+        });
+}
