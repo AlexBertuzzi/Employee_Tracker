@@ -63,3 +63,27 @@ function startUp() {
             }
         });
 }
+
+function viewDepartments() {
+    connection.query("SELECT * FROM department", function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        startUp();
+    });
+}
+
+function viewRoles() {
+    connection.query("SELECT * FROM role", function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        startUp();
+    });
+}
+
+function viewEmployees() {
+    connection.query("SELECT * FROM employee", function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        startUp();
+    });
+}
