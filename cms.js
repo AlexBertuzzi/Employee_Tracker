@@ -8,9 +8,10 @@ var connection = mysql.createConnection({
 
     user: "root",
     
-    password: "",
+    password: "Amb-19376482",
     database: "employees_DB"
 });
+
 
 connection.connect(function(err) {
     if (err) throw err;
@@ -186,7 +187,7 @@ function addEmployees() {
             {
                 name: "manager_id",
                 type: "input",
-                message: "Add manager id that will overseen the new employee."
+                message: "Add manager id that will oversee the new employee."
             },
         ])
         .then(function(answer) {
@@ -206,4 +207,72 @@ function addEmployees() {
                 }
             )
         });
+}
+
+function updateEmployeeRoles(){
+    connection.query("SELECT * FROM employee", function(err,results) {
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    name: "choice",
+                    type: "rawlist",
+                    choices: function(){
+                        var choiceArray = [];
+                        for (var i = 0; i < results.length; i++) {
+                            choiceArray.push(results[i].employee_id)
+                        }
+                        return choiceArray;
+                    },
+                    message: "Which employee would you like to update?"
+                }                
+             ])
+            .then(function(answer) {
+                var chosenEmployee;
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].employee_id === answer.choice) {
+                        chosenEmployee = results[i];
+                        console.log(chosenEmployee);
+                        inquirer
+                            .prompt([
+                                {
+                                    name: "update_employee_id",
+                                    type: "input",
+                                    message: "Update employee id."
+                                },
+                                {
+                                    name: "update_role_id",
+                                    type: "input",
+                                    message: "Update role id for employee."
+                                },
+                                {
+                                    name: "update_manager_id",
+                                    type: "input",
+                                    message: "Update manager id that will oversee the employee."
+                                },
+                            ])
+                            .then(function(answer2){
+                                connection.query(
+                                    "UPDATE employee SET ? WHERE ?",
+                                    [
+                                        {
+                                            employee_id: answer2.update_employee_id,
+                                            role_id: answer2.update_role_id,
+                                            manager_id: answer2.update_manager_id
+                                        },
+                                        {
+                                            employee_id: chosenEmployee.employee_id
+                                        }
+                                    ],
+                                    function(error) {
+                                        if (error) throw err;
+                                        console.log("Employee has been updated.");
+                                        startUp();
+                                    }
+                                )
+                            });
+                    }
+                }
+            });
+    })
 }
