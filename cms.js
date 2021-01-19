@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var cTable = require("console.table")
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -11,7 +12,6 @@ var connection = mysql.createConnection({
     password: "Amb-19376482",
     database: "employees_DB"
 });
-
 
 connection.connect(function(err) {
     if (err) throw err;
@@ -68,7 +68,7 @@ function startUp() {
 function viewDepartments() {
     connection.query("SELECT * FROM department", function(err, res) {
         if (err) throw err;
-        console.log(res);
+        console.table(res);
         startUp();
     });
 }
@@ -76,7 +76,7 @@ function viewDepartments() {
 function viewRoles() {
     connection.query("SELECT * FROM role", function(err, res) {
         if (err) throw err;
-        console.log(res);
+        console.table(res);
         startUp();
     });
 }
@@ -84,7 +84,7 @@ function viewRoles() {
 function viewEmployees() {
     connection.query("SELECT * FROM employee", function(err, res) {
         if (err) throw err;
-        console.log(res);
+        console.table(res);
         startUp();
     });
 }
@@ -232,7 +232,7 @@ function updateEmployeeRoles(){
                 for (var i = 0; i < results.length; i++) {
                     if (results[i].employee_id === answer.choice) {
                         chosenEmployee = results[i];
-                        console.log(chosenEmployee);
+                        console.table(chosenEmployee);
                         inquirer
                             .prompt([
                                 {
