@@ -32,6 +32,7 @@
   GitHub Repo Name: https://github.com/AlexBertuzzi/Employee_Tracker
 
   ## Link to Video
+  Link to Video: https://drive.google.com/file/d/1KiIpr5Wt0uZWw3bDUDtbLlV9g3_dL4EB/view
 
   ## License
   License Used: ISC
